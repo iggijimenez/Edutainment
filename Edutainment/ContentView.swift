@@ -8,14 +8,41 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var stepperInput = 0
+    @State private var tipPercentage = 5
+    
+    var tipPercentages = [5, 10, 20]
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationStack{
+            VStack {
+                Spacer()
+                Text("You are multipling by: \(stepperInput)")
+                Stepper("Multipling", value: $stepperInput, in: 2...12)
+                
+                Text("How many questions would you like to do?")
+                
+                Picker("Tip Percenatage", selection: $tipPercentage) {
+                    ForEach(tipPercentages, id: \.self) {
+                        Text($0, format: .number)
+                    }
+                }
+                .pickerStyle(.segmented)
+                
+                Spacer()
+                
+                NavigationLink("Next") {
+                    Text("Test")
+                }
+                
+                Spacer()
+                
+
+            }
+            .padding()
+            .navigationTitle("Home")
         }
-        .padding()
     }
 }
 
