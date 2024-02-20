@@ -9,10 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var stepperInput = 0
-    @State private var tipPercentage = 5
+    @State private var stepperInput = 2
+    @State private var questionNumber = 5
     
-    var tipPercentages = [5, 10, 20]
+    var questionNumbers = [5, 10, 20]
     
     var body: some View {
         NavigationStack{
@@ -21,10 +21,12 @@ struct ContentView: View {
                 Text("You are multipling by: \(stepperInput)")
                 Stepper("Multipling", value: $stepperInput, in: 2...12)
                 
+                Spacer()
+                
                 Text("How many questions would you like to do?")
                 
-                Picker("Tip Percenatage", selection: $tipPercentage) {
-                    ForEach(tipPercentages, id: \.self) {
+                Picker("Tip Percenatage", selection: $questionNumber) {
+                    ForEach(questionNumbers, id: \.self) {
                         Text($0, format: .number)
                     }
                 }
@@ -33,10 +35,13 @@ struct ContentView: View {
                 Spacer()
                 
                 NavigationLink("Next") {
-                    Text("Test")
+                    ForEach(0..<questionNumber, id: \.self ) {_ in
+                        Text("Test: \(stepperInput)")
+                    }
                 }
                 
                 Spacer()
+                
                 
 
             }
