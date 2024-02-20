@@ -12,6 +12,8 @@ struct ContentView: View {
     @State private var stepperInput = 2
     @State private var questionNumber = 5
     
+    @State private var numbers = [1,2,3,4,5,6,7,8,9,10,11,12].shuffled()
+    
     var questionNumbers = [5, 10, 20]
     
     var body: some View {
@@ -35,8 +37,8 @@ struct ContentView: View {
                 Spacer()
                 
                 NavigationLink("Next") {
-                    ForEach(0..<questionNumber, id: \.self ) {_ in
-                        Text("Test: \(stepperInput)")
+                    ForEach(0..<questionNumber, id: \.self ) { num in
+                        Text("Test: \(stepperInput) x \(numbers[num])")
                     }
                 }
                 
@@ -49,6 +51,11 @@ struct ContentView: View {
             .navigationTitle("Home")
         }
     }
+    
+    func solveMultiplactiion() { // stepperinput * numbers[num]
+        
+    }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
