@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Question {
+struct Question { // Struct for the questions
     let text: String
     let answer: Int
 }
@@ -24,7 +24,7 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 if isGameActive {
-                    GameView(question: questions[currentQuestionIndex], userAnswer: $userAnswer, onSubmit: checkAnswer)
+                    GameView(question: questions[currentQuestionIndex], userAnswer: $userAnswer, onSubmit: checkAnswer) // this is view with properties we pass by later(now)
                 } else {
                     SettingsView(startGame: startGame, selectedTable: $selectedTable, selectedQuestionCount: $selectedQuestionCount)
                 }
@@ -33,7 +33,7 @@ struct ContentView: View {
         }
     }
 
-    func startGame() {
+    func startGame() { // calls the questions and sets game to active
         isGameActive = true
         generateQuestions()
     }
@@ -48,14 +48,11 @@ struct ContentView: View {
         userAnswer = ""
     }
 
-    func checkAnswer() {
-        // Handle checking the user's answer
-        // You can add logic here to compare user's answer with the correct answer
-        // and move to the next question or end the game accordingly.
+    func checkAnswer() { // currently only checks the indexs
         if currentQuestionIndex < selectedQuestionCount - 1 {
             currentQuestionIndex += 1
             userAnswer = ""
-        } else {
+        } else { // if the index is out of bounds this is called
             endGame()
         }
     }
@@ -66,7 +63,7 @@ struct ContentView: View {
 }
 
 struct SettingsView: View {
-    var startGame: () -> Void
+    var startGame: () -> Void // This is a closure
     @Binding var selectedTable: Int
     @Binding var selectedQuestionCount: Int
 
