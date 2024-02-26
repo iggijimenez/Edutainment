@@ -18,13 +18,14 @@ struct ContentView: View {
     @State private var selectedQuestionCount = 5
     @State private var questions: [Question] = []
     @State private var currentQuestionIndex = 0
+    @State private var userScore = 0
     @State private var userAnswer = ""
 
     var body: some View {
         NavigationView {
             VStack {
                 if isGameActive {
-                    GameView(question: questions[currentQuestionIndex], userAnswer: $userAnswer, onSubmit: checkAnswer)
+                    GameView(question: questions[currentQuestionIndex], userAnswer: $userAnswer, userScore: $userScore, onSubmit: checkAnswer)
                 } else {
                     SettingsView(startGame: startGame, selectedTable: $selectedTable, selectedQuestionCount: $selectedQuestionCount)
                 }
@@ -53,7 +54,11 @@ struct ContentView: View {
         
         if userEnterAnswer == questions[currentQuestionIndex].answer {
             print("Correct")
+            userScore +=  1
         } else {
+            if userScore > 0 {
+                userScore -=  1
+            }
             print("Wrong")
         }
         
@@ -91,6 +96,7 @@ struct SettingsView: View {
 struct GameView: View {
     let question: Question
     @Binding var userAnswer: String
+    @Binding var userScore: Int
     var onSubmit: () -> Void
 
     var body: some View {
@@ -98,6 +104,8 @@ struct GameView: View {
             Text(question.text)
                 .font(.title)
                 .padding()
+            
+            Text("\(userScore) Points")
             
             Text("\(question.answer)")
                 .font(.title)
