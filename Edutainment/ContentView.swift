@@ -14,6 +14,7 @@ struct Question { // Struct for the questions
 
 struct ContentView: View {
     @State private var isGameActive = false
+    @State private var isEndGameAlert = false
     @State private var selectedTable = 2
     @State private var selectedQuestionCount = 5
     @State private var questions: [Question] = []
@@ -30,6 +31,9 @@ struct ContentView: View {
                     SettingsView(startGame: startGame, selectedTable: $selectedTable, selectedQuestionCount: $selectedQuestionCount)
                 }
             }
+            .alert(isPresented: $isEndGameAlert, content: {
+                Alert(title: Text(" your score was \(userScore) out of \(questions.count)"))
+            })
             .navigationTitle("Multiplication Practice")
         }
     }
@@ -46,6 +50,7 @@ struct ContentView: View {
             return Question(text: questionText, answer: selectedTable * multiplier)
         }
         currentQuestionIndex = 0
+        userScore = 0
         userAnswer = ""
     }
 
@@ -67,6 +72,8 @@ struct ContentView: View {
             currentQuestionIndex += 1
             userAnswer = ""
         } else { // if the index is out of bounds this is called
+            // need to call a view
+            isEndGameAlert = true
             endGame()
         }
     }
