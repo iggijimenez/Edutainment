@@ -24,7 +24,7 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 if isGameActive {
-                    GameView(question: questions[currentQuestionIndex], userAnswer: $userAnswer, onSubmit: checkAnswer) // this is view with properties we pass by later(now)
+                    GameView(question: questions[currentQuestionIndex], userAnswer: $userAnswer, onSubmit: checkAnswer)
                 } else {
                     SettingsView(startGame: startGame, selectedTable: $selectedTable, selectedQuestionCount: $selectedQuestionCount)
                 }
@@ -49,6 +49,15 @@ struct ContentView: View {
     }
 
     func checkAnswer() { // currently only checks the indexs
+        let userEnterAnswer = Int(userAnswer) ?? 0
+        
+        if userEnterAnswer == questions[currentQuestionIndex].answer {
+            print("Correct")
+        } else {
+            print("Wrong")
+        }
+        
+        
         if currentQuestionIndex < selectedQuestionCount - 1 {
             currentQuestionIndex += 1
             userAnswer = ""
@@ -87,6 +96,10 @@ struct GameView: View {
     var body: some View {
         VStack {
             Text(question.text)
+                .font(.title)
+                .padding()
+            
+            Text("\(question.answer)")
                 .font(.title)
                 .padding()
 
